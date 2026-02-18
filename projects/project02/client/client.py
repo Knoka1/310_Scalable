@@ -181,19 +181,19 @@ print()
 #
 # delete_images:
 #
-# try:
-#   print("**delete_images:")
-#   result = photoapp.delete_images()
+try:
+  print("**delete_images:")
+  result = photoapp.delete_images()
 
-#   print(result)
+  print(result)
     
-# except Exception as err:
-#   print("CLIENT ERROR:")
-#   print(str(err))
+except Exception as err:
+  print("CLIENT ERROR:")
+  print(str(err))
 
-# #
-# # done:
-# #
-# print()
-# print("**done**")
-# print()
+#
+# done:
+#
+print()
+print("**done**")
+print()
