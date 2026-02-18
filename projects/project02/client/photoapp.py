@@ -374,7 +374,7 @@ def post_image(userid, local_filename):
   image's assetid upon success, raises an exception on error
   """
   try :
-    url = _build_url("/image")
+    url = _build_url(f"/images/{userid}")
 
     filename = _validate_local_filename(local_filename)
 
@@ -388,8 +388,8 @@ def post_image(userid, local_filename):
       'local_filename': os.path.basename(filename),
       "data": image_str
     }
-
-    response = requests.post(url, params={'userid': userid}, json=data)
+# params CREATES A QUERY PARAMETER, but we want a url parameterer. Stupid
+    response = requests.post(url, json=data)
     status_code = response.status_code
     body = _safe_json(response)
     if status_code == 200:
@@ -445,10 +445,8 @@ def get_image(assetid, local_filename = None):
   """
   
   try:
-    params = {'assetid': assetid}
-
-    url = _build_url("/image")
-    response = requests.get(url, params=params)
+    url = _build_url(f"/image/{assetid}")
+    response = requests.get(url)
     
     if response.status_code == 200:
       body = _safe_json(response)
