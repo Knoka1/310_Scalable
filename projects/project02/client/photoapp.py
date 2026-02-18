@@ -374,7 +374,7 @@ def post_image(userid, local_filename):
   image's assetid upon success, raises an exception on error
   """
   try :
-    url = _build_url(f"/images/{userid}")
+    url = _build_url(f"/image/{userid}")
 
     filename = _validate_local_filename(local_filename)
 
