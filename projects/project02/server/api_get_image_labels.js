@@ -67,15 +67,17 @@ exports.get_image_labels = async (request, response) => {
 
       dbConn = await get_dbConn();
       await dbConn.beginTransaction();
+      const assetidCheck = "SELECT assetid FROM assets WHERE assetid = ?";
+      const [assetidRows] = await dbConn.execute(assetidCheck, [assetid]);
 
-      const lookup_sql = "SELECT labelid, assetid, label, confidence FROM assetlabels WHERE assetid = ? ORDER BY label";
-      const [rows] = await dbConn.execute(lookup_sql, [assetid]);
-
-      if (rows.length === 0) {
+      if (assetidRows.length === 0) {
         const err = new Error("no such assetid");
         err.status = 400;
         throw err;
       }
+      
+      const lookup_sql = "SELECT labelid, assetid, label, confidence FROM assetlabels WHERE assetid = ? ORDER BY label";
+      const [rows] = await dbConn.execute(lookup_sql, [assetid]);
 
       console.log("getting labels...");
 
