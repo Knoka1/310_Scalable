@@ -57,7 +57,7 @@ exports.get_image_labels = async (request, response) => {
   async function try_get_image_labels() {
     let dbConn = null;
     try {
-      const assetid = request.query.assetid;
+      const assetid = request.params.assetid;
 
       if (assetid === undefined) {
         const err = new Error("missing assetid");

@@ -71,7 +71,7 @@ exports.get_images_with_label = async (request, response) => {
   async function try_get_images_with_label() {
     let dbConn = null;
     try {
-      const label = request.query.label;
+      const label = request.params.label;
 
       if (label === undefined) {
         const err = new Error("missing label");

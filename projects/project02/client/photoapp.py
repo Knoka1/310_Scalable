@@ -526,11 +526,9 @@ def get_image_labels(assetid):
   """
 
   try:
-    url = _build_url("/image_labels")
+    url = _build_url(f"/image_labels/{assetid}")
 
-    params = {'assetid': assetid}
-
-    response = requests.get(url, params=params)
+    response = requests.get(url)
 
     if response.status_code == 200:
       body = _safe_json(response)
@@ -611,11 +609,9 @@ def get_images_with_label(label):
   """
 
   try:
-    url = _build_url("/images_with_label")
+    url = _build_url(f"/images_with_label/{label}")
 
-    params = {'label': label}
-
-    response = requests.get(url, params=params)
+    response = requests.get(url)
 
     if response.status_code == 200:
       body = _safe_json(response)

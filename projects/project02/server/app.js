@@ -117,10 +117,10 @@ let post_image_file = require('./api_post_image.js');
 app.post('/image/:userid', post_image_file.post_image);
 
 let get_image_labels = require('./api_get_image_labels.js');
-app.get('/image_labels', get_image_labels.get_image_labels); 
+app.get('/image_labels/:assetid', get_image_labels.get_image_labels); 
 
 let get_images_with_label = require('./api_get_images_with_label.js');
-app.get('/images_with_label', get_images_with_label.get_images_with_label);
+app.get('/images_with_label/:label', get_images_with_label.get_images_with_label);
 
 let delete_images = require('./api_delete_images.js');
 app.delete('/images', delete_images.delete_images);
