@@ -111,7 +111,7 @@ let get_images_file = require('./api_get_images.js');
 app.get('/images', get_images_file.get_images);
 
 let get_image_file = require('./api_get_image.js');
-app.get('/image/:assetid', get_image_file.get_image);
+app.get('/image/', get_image_file.get_image);
 
 let post_image_file = require('./api_post_image.js');
 app.post('/image', post_image_file.post_image);
