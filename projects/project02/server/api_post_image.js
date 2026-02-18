@@ -132,7 +132,7 @@ exports.post_image = async (request, response) => {
 
     for (let label of rek_response.Labels) {
       let label_sql = "INSERT INTO assetlabels (assetid, label, confidence) VALUES (?, ?, ?);";
-      await dbConn.execute(label_sql, [assetid, label.Name, label.Confidence]);
+      await dbConn.execute(label_sql, [assetid, label.Name, Math.floor(label.Confidence)]);
     }
   }
 
