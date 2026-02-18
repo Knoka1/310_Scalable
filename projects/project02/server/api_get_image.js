@@ -92,7 +92,7 @@ exports.get_image = async (request, response) => {
   async function try_get_image() {
     let dbConn = null;
     try {
-      const assetid = request.params.assetid;
+      const assetid = request.query.assetid;
 
       if (assetid === undefined) {
         const err = new Error("missing assetid");
