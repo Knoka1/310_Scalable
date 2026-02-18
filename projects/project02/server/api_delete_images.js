@@ -10,7 +10,7 @@
 
 const mysql2 = require('mysql2/promise');
 const { get_dbConn, get_bucket, get_bucket_name } = require('./helper.js');
-const { DeleteObjectCommand } = require('@aws-sdk/client-s3');
+const { DeleteObjectsCommand } = require('@aws-sdk/client-s3');
 
 //
 // p_retry requires the use of a dynamic import:
@@ -88,9 +88,9 @@ exports.delete_images = async (request, response) => {
 
       const bucket = get_bucket();
         try {
-          await bucket.send(new DeleteObjectCommand({
+          await bucket.send(new DeleteObjectsCommand({
             Bucket: get_bucket_name(),
-            Objects: rows.map(row => ({ Key: row.bucketkey }))
+            Delete: { Objects: rows.map(row => ({ Key: row.bucketkey })) }
           }));
         } catch (error) {
           console.log(`S3 deletion error: ${error.message}`);
