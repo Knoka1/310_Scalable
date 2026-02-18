@@ -114,7 +114,7 @@ let get_image_file = require('./api_get_image.js');
 app.get('/image/:assetid', get_image_file.get_image);
 
 let post_image_file = require('./api_post_image.js');
-app.post('/images/:userid', post_image_file.post_image);
+app.post('/image/:userid', post_image_file.post_image);
 
 let get_image_labels = require('./api_get_image_labels.js');
 app.get('/image_labels', get_image_labels.get_image_labels); 
