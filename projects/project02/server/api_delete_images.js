@@ -68,14 +68,21 @@ exports.delete_images = async (request, response) => {
       await dbConn.beginTransaction();
 
       const [rows] = await dbConn.execute(
-        "SELECT assetid, bucketkey FROM assets"
+        "SELECT bucketkey FROM assets"
       );
 
       console.log(`found ${rows.length} images to delete`);
 
-      await dbConn.execute("DELETE FROM assetlabels");
-
-      await dbConn.execute("DELETE FROM assets");
+      let sql = `
+        SET foreign_key_checks = 0;
+        TRUNCATE TABLE assetlabels;
+        TRUNCATE TABLE assets;
+        SET foreign_key_checks = 1;
+        ALTER TABLE assets AUTO_INCREMENT = 1001;
+      `;
+      
+      await dbConn.query(sql);
+      await dbConn.commit();
 
       console.log("deleted from database, now deleting from S3...");
 
@@ -88,8 +95,6 @@ exports.delete_images = async (request, response) => {
         } catch (error) {
           console.log(`S3 deletion error: ${error.message}`);
         }
-        
-      await dbConn.commit();
 
       return { message: "success" };
     }
@@ -132,7 +137,6 @@ exports.delete_images = async (request, response) => {
 
     response.json({
       "message": "success",
-      "data": rows,
     });
   }
   catch (err) {
