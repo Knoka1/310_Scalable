@@ -143,7 +143,7 @@ exports.post_image = async (request, response) => {
     let bucketkey = "";
 
     try {
-      const userid = request.query.userid;
+      const userid = request.params.userid;
       let local_filename = request.body.local_filename;
 
       if (request.body.data === undefined) {
