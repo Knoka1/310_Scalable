@@ -181,7 +181,7 @@ exports.post_image = async (request, response) => {
       console.log(`done, inserted asset ${assetid}`);
       await dbConn.commit();
 
-      return assetid;
+      return {message: "success", assetid: assetid};
     }
     catch (err) {
       //
@@ -218,17 +218,14 @@ exports.post_image = async (request, response) => {
   try {
     console.log("**Call to post /images...");
 
-    let assetid = await pRetry(try_post_image, {retries: 2});
+    let result = await pRetry(try_post_image, {retries: 2});
 
     //
     // success, return data in JSON format:
     //
     console.log("success, sending response...");
 
-    response.json({
-      "message": "success",
-      "assetid": assetid
-    });
+    response.json(result);
   }
   catch (err) {
     //
