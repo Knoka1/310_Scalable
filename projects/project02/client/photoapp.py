@@ -396,13 +396,12 @@ def post_image(userid, local_filename):
       return body['assetid']
     else:
       msg = body['message']
-      err_msg = f"status code {response.status_code}: {msg}"
       #
       # NOTE: this exception will not trigger retry mechanism, 
       # since we reached the server and the server-side failed, 
       # and we are assuming the server-side is also doing retries.
       #
-      raise HTTPError(err_msg)
+      raise ValueError(msg)
   
   except Exception as err:
     logging.error("post_image():")
@@ -468,13 +467,12 @@ def get_image(assetid, local_filename = None):
     elif response.status_code in [400, 500]:
       body = _safe_json(response)
       msg = body['message']
-      err_msg = f"status code {response.status_code}: {msg}"
       #
       # NOTE: this exception will not trigger retry mechanism, 
       # since we reached the server and the server-side failed, 
       # and we are assuming the server-side is also doing retries.
       #
-      raise ValueError(err_msg)
+      raise ValueError(msg)
     
     else:
       #
