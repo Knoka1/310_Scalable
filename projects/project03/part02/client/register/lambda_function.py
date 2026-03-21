@@ -109,7 +109,17 @@ def lambda_handler(event, context):
         #       else:
         #         api_utils.error(500, msg)
         #
-
+        body = {"token": token}
+        response = requests.post(auth_url + "/auth", json=body)
+        if response.status_code == 200:
+            userid = response.json()
+            print("Authentication successful, userid:", userid)
+        elif response.status_code == 401:
+            return api_utils.error(401, response.json())
+        elif response.status_code in [400, 500]:
+            return api_utils.error(500, response.json())
+        else:
+            return api_utils.error(500, "unexpected response from authentication service")
 
 
         #
@@ -123,6 +133,10 @@ def lambda_handler(event, context):
         # body = response.json()
         # displayname = body["displayname"]
         # print("displayname callback returned this name:", displayname)
+        response = requests.get(displaynamehook, headers={"User-Agent": "Mozilla/5.0"})
+        body = response.json()
+        displayname = body["displayname"]
+        print("displayname callback returned this name:", displayname)
 
 
 
@@ -135,6 +149,8 @@ def lambda_handler(event, context):
         # TODO: body = ...
         # TODO: response.requests.?(url, json=body)
         #
+        body = {"displayname": displayname, "message": "successfully registered as '" + displayname + "'"}
+        response = requests.post(messagehook, json=body, headers={"User-Agent": "Mozilla/5.0"})
 
 
 
@@ -151,6 +167,15 @@ def lambda_handler(event, context):
         #
         # TODO: update or insert into DB
         #
+        row = datatier.retrieve_one_row(dbConn, "SELECT userid FROM registered WHERE userid = %s", [userid])
+        if row is None or row == ():
+            datatier.perform_action(dbConn,
+                "INSERT INTO registered(userid, displayname, displaynamehook, messagehook) VALUES(%s, %s, %s, %s)",
+                [userid, displayname, displaynamehook, messagehook])
+        else:
+            datatier.perform_action(dbConn,
+                "UPDATE registered SET displayname = %s, displaynamehook = %s, messagehook = %s WHERE userid = %s",
+                [displayname, displaynamehook, messagehook, userid])
 
 
 
