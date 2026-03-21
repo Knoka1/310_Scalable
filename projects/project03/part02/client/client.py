@@ -137,11 +137,6 @@ def register(callback_url, token, authsvc_to_use):
         reraise=True
       )
 def message(token, authsvc_to_use, msg):
-    #
-    # TODO #2:
-    #
-    print("**TODO 2 of 3: POST /message")
-    return
 
     try:
         # 
@@ -200,11 +195,6 @@ def message(token, authsvc_to_use, msg):
         reraise=True
       )
 def delete_registration(token, authsvc_to_use):
-    #
-    # TODO #3:
-    #
-    print("**TODO 3 of 3: DELETE /register")
-    return
 
     try:
         # 
