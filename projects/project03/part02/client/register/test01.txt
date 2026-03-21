@@ -1,0 +1,6 @@
+{
+  "headers": { "Authentication": "6bd742ea-411f-4785-a614-e221d3b5d82c",
+                "Service": "1" },
+  "body": "{ \"displaynamehook\": \"http://some-url.trycloudfare.com/displayname\",
+             \"messagehook\": \"http://some-url.trycloudfare.com/message\" }"
+}

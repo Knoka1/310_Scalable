@@ -32,3 +32,6 @@ log.txt
 projects/project01/CATS-310Scalable_Alec_Varshaa/
 CATS-310Scalable_Alec_Varshaa.zip
 *.pyc
+
+*.zip
+*.rtf
